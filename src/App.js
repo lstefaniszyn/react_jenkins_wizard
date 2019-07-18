@@ -9,6 +9,8 @@ import './styles/custom.css';
 import './styles/prog-tracker.css';
 
 export function App({ initialData }) {
+  
+  
   return (
     <div className="container">
       <h1>Certified Continous Integration (CCI) wizard</h1>
