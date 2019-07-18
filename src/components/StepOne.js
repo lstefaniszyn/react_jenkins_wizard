@@ -6,8 +6,7 @@ export const StepOne = props => {
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
-    props.getTemplateData()['firstName'] = event.target.value;
-    console.log("Data", props.getTemplateData())
+    props.updateTemplateData('firstName', event.target.value);
   };
   const handleOnChangeLastName = event => {
     setLastName(event.target.value);

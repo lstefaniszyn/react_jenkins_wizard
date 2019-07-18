@@ -4,18 +4,18 @@ import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { StepFour } from './StepFour';
 
-const templateData = {};
-const getTemplateData = () => {
+let templateData = {};
+
+const updateTemplateData = (key, value) => {
+  templateData[key] = value;
   console.log('FirstName:', templateData);
-  return templateData;
 };
-  
-  
-//   templateData[key] = value;
-//   console.log('FirstName:', templateData);
 
 const steps = [
-  { name: 'Choose template', component: <StepOne getTemplateData={getTemplateData} /> },
+  {
+    name: 'Choose template',
+    component: <StepOne updateTemplateData={updateTemplateData} />
+  },
   { name: 'Email', component: <StepTwo /> },
   { name: 'Password', component: <StepThree /> },
   { name: 'Agreement', component: <StepFour /> }
