@@ -3,6 +3,11 @@ import './App.css';
 import { steps } from './components/steps';
 import MultiStep from './components/MultiStep';
 
+import './styles/normalize.css';
+import './styles/skeleton.css';
+import './styles/custom.css';
+import './styles/prog-tracker.css';
+
 export function App({ initialData }) {
   return (
     <div className="container">
