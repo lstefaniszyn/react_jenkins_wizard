@@ -11,10 +11,23 @@ const updateTemplateData = (key, value) => {
   console.log('FirstName:', templateData);
 };
 
+let isTemplateNamesUpdatedStatus = false;
+const isTemplateNamesUpdated = (status = null) => {
+  if (status !== null) {
+    isTemplateNamesUpdatedStatus = status;
+  }
+  return isTemplateNamesUpdatedStatus;
+};
+
 const steps = [
   {
     name: 'Choose template',
-    component: <StepOne updateTemplateData={updateTemplateData} />
+    component: (
+      <StepOne
+        updateTemplateData={updateTemplateData}
+        isTemplateNamesUpdated={isTemplateNamesUpdated}
+      />
+    )
   },
   { name: 'Email', component: <StepTwo /> },
   { name: 'Password', component: <StepThree /> },
