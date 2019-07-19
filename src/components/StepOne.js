@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { getTemplateNames } from './../server/templateData.js';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [templateNames, setTemplateNames] = useState(getTemplateNames());
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -11,6 +13,8 @@ export const StepOne = props => {
   const handleOnChangeLastName = event => {
     setLastName(event.target.value);
   };
+
+  console.log('TemplateData', templateNames);
 
   return (
     <div>
@@ -30,6 +34,15 @@ export const StepOne = props => {
       <div className="row">
         <div className="six columns">
           <label>Last Name</label>
+          <select>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option selected value="coconut">
+              Coconut
+            </option>
+            <option value="mango">Mango</option>
+          </select>
+
           <input
             className="u-full-width"
             placeholder="Last Name"
