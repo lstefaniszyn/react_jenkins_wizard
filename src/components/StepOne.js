@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getTemplateNames } from './../server/templateData.js';
+import { getTemplates } from './../server/templateData.js';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [templateNames, setTemplateNames] = useState('');
+  const [templateNames, setTemplateNames] = useState([]);
   const [templateName, setTemplateName] = useState('');
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
     console.log('FirstName: ', event.target.value);
     props.updateTemplateData('firstName', event.target.value);
-  };
-  const handleOnChangeLastName = event => {
-    setLastName(event.target.value);
   };
 
   const handleChangeTemplate = event => {
@@ -22,23 +18,20 @@ export const StepOne = props => {
   };
 
   useEffect(() => {
-    console.log('isTemplateNamesUpdated:', props.isTemplateNamesUpdated());
-    if (!props.isTemplateNamesUpdated()) {
-      props.isTemplateNamesUpdated(true);
-      setTemplateNames(getTemplateNames);
-    }
-  }, [props]); //this is for unmount from each component's render
+    setTemplateNames(getTemplates);
+  }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
-
-  const getTemplateNames = () => {
-    return(
-    <option value="grapefruit">Grapefruit</option>
-    <option value="lime">Lime</option>
-    <option value="coconut">Coconut</option>
-    <option value="mango">Mango</option>
+  const getDivTemplateNames = () => {
+    return (
+      <>
+        {templateNames.map((template, index) => (
+          <option key={index} value={template.name} url_link={template.url_link}  >
+            {template.name}
+          </option>
+        ))}
+      </>
     );
-
-  }
+  };
 
   return (
     <div>
@@ -58,20 +51,9 @@ export const StepOne = props => {
       <div className="row">
         <div className="six columns">
           <label>Last Name</label>
-          <select onChange={handleChangeTemplate}>
-            <option value="grapefruit">Grapefruit</option>
-            <option value="lime">Lime</option>
-            <option value="coconut">Coconut</option>
-            <option value="mango">Mango</option>
+          <select className="u-full-width" onChange={handleChangeTemplate}>
+            {getDivTemplateNames()}
           </select>
-
-          <input
-            className="u-full-width"
-            placeholder="Last Name"
-            type="text"
-            onChange={handleOnChangeLastName}
-            value={lastName}
-          />
         </div>
       </div>
     </div>

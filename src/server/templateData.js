@@ -12,10 +12,10 @@ const templateData = () => {
   };
 };
 
-function getTemplateNames() {
+function getTemplates() {
   return templateData().templates.map(template => {
-    return template.name;
+    return template;
   });
 }
 
-export { getTemplateNames };
+export { getTemplates };

@@ -11,13 +11,6 @@ const updateTemplateData = (key, value) => {
   console.log('FirstName:', templateData);
 };
 
-let isTemplateNamesUpdatedStatus = false;
-const isTemplateNamesUpdated = (status = null) => {
-  if (status !== null) {
-    isTemplateNamesUpdatedStatus = status;
-  }
-  return isTemplateNamesUpdatedStatus;
-};
 
 const steps = [
   {
@@ -25,7 +18,6 @@ const steps = [
     component: (
       <StepOne
         updateTemplateData={updateTemplateData}
-        isTemplateNamesUpdated={isTemplateNamesUpdated}
       />
     )
   },
