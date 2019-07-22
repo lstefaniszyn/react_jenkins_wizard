@@ -5,6 +5,7 @@ export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
   const [templateNames, setTemplateNames] = useState([]);
   const [templateName, setTemplateName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -18,14 +19,20 @@ export const StepOne = props => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     setTemplateNames(getTemplates);
+    setIsLoading(false);
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const getDivTemplateNames = () => {
     return (
       <>
         {templateNames.map((template, index) => (
-          <option key={index} value={template.name} url_link={template.url_link}  >
+          <option
+            key={index}
+            value={template.name}
+            url_link={template.url_link}
+          >
             {template.name}
           </option>
         ))}
@@ -50,10 +57,14 @@ export const StepOne = props => {
       </div>
       <div className="row">
         <div className="six columns">
-          <label>Last Name</label>
-          <select className="u-full-width" onChange={handleChangeTemplate}>
-            {getDivTemplateNames()}
-          </select>
+          <label>Template list</label>
+          {isLoading ? (
+            <div>Loading ...</div>
+          ) : (
+            <select className="u-full-width" onChange={handleChangeTemplate}>
+              {getDivTemplateNames()}
+            </select>
+          )}
         </div>
       </div>
     </div>
