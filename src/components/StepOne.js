@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getTemplates } from './../server/templateData.js';
+import { getTemplates, findTemplate } from './../server/templateData.js';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
   const [templateNames, setTemplateNames] = useState([]);
-  const [templateName, setTemplateName] = useState('');
+  const [templateData, setTemplateData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -15,8 +15,8 @@ export const StepOne = props => {
   };
 
   const handleChangeTemplate = event => {
-    setTemplateName(event.target.value);
     console.log('Selected: ', event.target.value);
+    setTemplateData(findTemplate(event.target.value));
   };
 
   useEffect(() => {
