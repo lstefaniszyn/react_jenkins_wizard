@@ -6,6 +6,7 @@ export const StepOne = props => {
   const [templateNames, setTemplateNames] = useState([]);
   const [templateName, setTemplateName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -19,8 +20,13 @@ export const StepOne = props => {
   };
 
   useEffect(() => {
+    setIsError(false);
     setIsLoading(true);
-    setTemplateNames(getTemplates);
+    try {
+      setTemplateNames(getTemplates());
+    } catch (error) {
+      setIsError(true);
+    }
     setIsLoading(false);
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
@@ -58,6 +64,10 @@ export const StepOne = props => {
       <div className="row">
         <div className="six columns">
           <label>Template list</label>
+          {isError && (
+            <div>Something went wrong with getting Templates....</div>
+          )}
+
           {isLoading ? (
             <div>Loading ...</div>
           ) : (

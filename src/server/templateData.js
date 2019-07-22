@@ -1,5 +1,10 @@
+// const templateData = async() => {
+//   //send API request to pull file with templates list
+//   return await axios("http://google.com").data;
+
 const templateData = () => {
   //send API request to pull file with templates list
+  
   return {
     templates: [
       { name: 'Java_Maven', url_link: 'http://java_maven.zip' },
