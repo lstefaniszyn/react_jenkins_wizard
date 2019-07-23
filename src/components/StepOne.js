@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { getTemplates, findTemplate } from './../server/templateData.js';
 
@@ -20,28 +21,34 @@ export const StepOne = props => {
   };
 
   useEffect(() => {
-    setIsError(false);
-    setIsLoading(true);
-    try {
-      setTemplateNames(getTemplates());
-    } catch (error) {
-      setIsError(true);
-    }
-    setIsLoading(false);
+    const fetchTemplates = async () => {
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          'https://jsonplaceholder.typicode.com/photos'
+        );
+        setTemplateNames(response.data);
+      } catch (error) {
+        console.log('Error: ', error);
+        setIsError(true);
+        setTemplateNames([]);
+      }
+      setIsLoading(false);
+    };
+    fetchTemplates();
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const getDivTemplateNames = () => {
     return (
       <>
-        {templateNames.map((template, index) => (
-          <option
-            key={index}
-            value={template.name}
-            url_link={template.url_link}
-          >
-            {template.name}
-          </option>
-        ))}
+        {/* <option key='1' value='test'>TEST</option> */}
+        {templateNames &&
+          templateNames.map((template, index) => (
+            <option key={index} value={template.title} url_link={template.url}>
+              {template.title}
+            </option>
+          ))}
       </>
     );
   };
