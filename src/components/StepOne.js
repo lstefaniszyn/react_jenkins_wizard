@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { getTemplates, findTemplate } from './../server/templateData.js';
 
@@ -17,7 +16,8 @@ export const StepOne = props => {
 
   const handleChangeTemplate = event => {
     console.log('Selected: ', event.target.value);
-    setTemplateData(findTemplate(event.target.value));
+    console.log('Type: ', event.target.detail);
+    setTemplateData(findTemplate(templateNames, event.target.value));
   };
 
   useEffect(() => {
@@ -25,9 +25,7 @@ export const StepOne = props => {
       setIsError(false);
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          'https://jsonplaceholder.typicode.com/photos'
-        );
+        const response = await getTemplates();
         setTemplateNames(response.data);
       } catch (error) {
         console.log('Error: ', error);
@@ -45,7 +43,7 @@ export const StepOne = props => {
         {/* <option key='1' value='test'>TEST</option> */}
         {templateNames &&
           templateNames.map((template, index) => (
-            <option key={index} value={template.title} url_link={template.url}>
+            <option key={index} value={template.title} url={template.url}>
               {template.title}
             </option>
           ))}
