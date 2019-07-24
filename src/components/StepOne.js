@@ -16,11 +16,25 @@ export const StepOne = props => {
 
   const handleChangeTemplate = event => {
     console.log('Selected: ', event.target.value);
-    console.log('Type: ', event.target.detail);
     setTemplateData(findTemplate(templateNames, event.target.value));
+    setIsDisabledNextButton(false);
   };
 
+  const handleClickNextButton = event => {
+    console.log('clicked  NextButton');
+  };
+
+  function setIsDisabledNextButton(state) {
+    document.getElementById('buttonNext').disabled = state;
+  }
+
   useEffect(() => {
+    setIsDisabledNextButton(true);
+
+    document
+      .getElementById('buttonNext')
+      .addEventListener('click', handleClickNextButton);
+
     const fetchTemplates = async () => {
       setIsError(false);
       setIsLoading(true);
@@ -35,6 +49,10 @@ export const StepOne = props => {
       setIsLoading(false);
     };
     fetchTemplates();
+    return () =>
+      document
+        .getElementById('buttonNext')
+        .removeEventListener('click', handleClickNextButton);
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const getDivTemplateNames = () => {

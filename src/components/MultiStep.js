@@ -166,7 +166,7 @@ function MultiStep(props) {
       React.createElement(
         'button',
         {
-          className: 'buttonPrevious',
+          id: 'buttonPrevious',
           style: buttonsState.showPreviousBtn
             ? {}
             : {
@@ -179,7 +179,7 @@ function MultiStep(props) {
       React.createElement(
         'button',
         {
-          className: 'buttonNext',
+          id: 'buttonNext',
           style: buttonsState.showNextBtn
             ? {}
             : {
