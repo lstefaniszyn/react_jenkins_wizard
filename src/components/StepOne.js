@@ -8,32 +8,10 @@ export const StepOne = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const handleOnChangeFirstName = event => {
-    setFirstName(event.target.value);
-    console.log('FirstName: ', event.target.value);
-    props.updateTemplateData('firstName', event.target.value);
-  };
-
-  const handleChangeTemplate = event => {
-    console.log('Selected: ', event.target.value);
-    setTemplateData(findTemplate(templateNames, event.target.value));
-    setIsDisabledNextButton(false);
-  };
-
-  const handleClickNextButton = event => {
-    console.log('clicked  NextButton');
-  };
-
-  function setIsDisabledNextButton(state) {
-    document.getElementById('buttonNext').disabled = state;
-  }
-
   useEffect(() => {
     setIsDisabledNextButton(true);
 
-    document
-      .getElementById('buttonNext')
-      .addEventListener('click', handleClickNextButton);
+    attachLisenerToNextButton(handleClickNextButton);
 
     const fetchTemplates = async () => {
       setIsError(false);
@@ -54,6 +32,27 @@ export const StepOne = props => {
         .getElementById('buttonNext')
         .removeEventListener('click', handleClickNextButton);
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
+
+
+  const handleOnChangeFirstName = event => {
+    setFirstName(event.target.value);
+    console.log('FirstName: ', event.target.value);
+    props.updateTemplateData('firstName', event.target.value);
+  };
+
+  const handleChangeTemplate = event => {
+    console.log('Selected: ', event.target.value);
+    setTemplateData(findTemplate(templateNames, event.target.value));
+    setIsDisabledNextButton(false);
+  };
+
+  const handleClickNextButton = event => {
+    console.log('clicked  NextButton');
+  };
+
+  function setIsDisabledNextButton(state) {
+    document.getElementById('buttonNext').disabled = state;
+  }
 
   const getDivTemplateNames = () => {
     return (
@@ -103,3 +102,12 @@ export const StepOne = props => {
     </div>
   );
 };
+
+
+
+function attachLisenerToNextButton(handleClickNextButton) {
+  document
+    .getElementById('buttonNext')
+    .addEventListener('click', handleClickNextButton);
+}
+
