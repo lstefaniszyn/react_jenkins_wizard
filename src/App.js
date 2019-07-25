@@ -13,7 +13,8 @@ export function App({ initialData }) {
   
   return (
     <div className="container">
-      <h1>Certified Continous Integration (CCI) wizard</h1>
+        <h1>Pipeline generator wizard</h1>
+      <h4>Certified Contiuous Integration </h4>
       <div>
         <MultiStep showNavigation={true} steps={steps} />
       </div>

@@ -19,6 +19,7 @@ export const StepOne = props => {
       try {
         const response = await getTemplates();
         setTemplateNames(response.data);
+        setIsDisabledNextButton(false);
       } catch (error) {
         console.log('Error: ', error);
         setIsError(true);
@@ -27,7 +28,9 @@ export const StepOne = props => {
       setIsLoading(false);
     };
     fetchTemplates();
-    return () => dettachLisenerToNextButtondocument(handleClickNextButton);
+    return () => {
+      dettachLisenerToNextButtondocument(handleClickNextButton);
+    };
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const handleOnChangeFirstName = event => {
@@ -39,7 +42,7 @@ export const StepOne = props => {
   const handleChangeTemplate = event => {
     console.log('Selected: ', event.target.value);
     setTemplateData(findTemplate(templateNames, event.target.value));
-    setIsDisabledNextButton(false);
+    
   };
 
   const handleClickNextButton = event => {
