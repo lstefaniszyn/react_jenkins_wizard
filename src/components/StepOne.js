@@ -27,12 +27,8 @@ export const StepOne = props => {
       setIsLoading(false);
     };
     fetchTemplates();
-    return () =>
-      document
-        .getElementById('buttonNext')
-        .removeEventListener('click', handleClickNextButton);
+    return () => dettachLisenerToNextButtondocument(handleClickNextButton);
   }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
-
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -103,11 +99,10 @@ export const StepOne = props => {
   );
 };
 
-
-
-function attachLisenerToNextButton(handleClickNextButton) {
-  document
-    .getElementById('buttonNext')
-    .addEventListener('click', handleClickNextButton);
+function attachLisenerToNextButton(handle) {
+  document.getElementById('buttonNext').addEventListener('click', handle);
 }
 
+function dettachLisenerToNextButtondocument(handler) {
+  document.getElementById('buttonNext').removeEventListener('click', handler);
+}
