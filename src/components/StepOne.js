@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getTemplates, findTemplate } from './../server/templateData.js';
+import { nextButton } from './commonActions';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
@@ -7,31 +8,6 @@ export const StepOne = props => {
   const [templateData, setTemplateData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    setIsDisabledNextButton(true);
-
-    attachLisenerToNextButton(handleClickNextButton);
-
-    const fetchTemplates = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        const response = await getTemplates();
-        setTemplateNames(response.data);
-        setIsDisabledNextButton(false);
-      } catch (error) {
-        console.log('Error: ', error);
-        setIsError(true);
-        setTemplateNames([]);
-      }
-      setIsLoading(false);
-    };
-    fetchTemplates();
-    return () => {
-      dettachLisenerToNextButtondocument(handleClickNextButton);
-    };
-  }, []); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -42,16 +18,40 @@ export const StepOne = props => {
   const handleChangeTemplate = event => {
     console.log('Selected: ', event.target.value);
     setTemplateData(findTemplate(templateNames, event.target.value));
-    
   };
 
   const handleClickNextButton = event => {
-    console.log('clicked  NextButton');
+    // console.log('clicked  NextButton');
+    console.log('Selected Template: ', templateData);
   };
 
-  function setIsDisabledNextButton(state) {
-    document.getElementById('buttonNext').disabled = state;
-  }
+  useEffect(
+    () => {
+      console.log('useEffect');
+      nextButton.setDisable(true);
+
+      nextButton.attachListener(handleClickNextButton);
+      const fetchTemplates = async () => {
+        setIsError(false);
+        setIsLoading(true);
+        try {
+          const response = await getTemplates();
+          setTemplateNames(response.data);
+          nextButton.setDisable(false);
+        } catch (error) {
+          console.log('Error: ', error);
+          setIsError(true);
+          setTemplateNames([]);
+        }
+        setIsLoading(false);
+      };
+      fetchTemplates();
+      return () => {
+        nextButton.detachListener(handleClickNextButton);
+      };
+    }, // eslint-disable-next-line
+    []
+  ); //We only want to fetch data when the component mounts. If the array with the variables is empty, the hook doesn’t run when updating the component at all, because it doesn’t have to watch any variables.
 
   const getDivTemplateNames = () => {
     return (
@@ -101,11 +101,3 @@ export const StepOne = props => {
     </div>
   );
 };
-
-function attachLisenerToNextButton(handle) {
-  document.getElementById('buttonNext').addEventListener('click', handle);
-}
-
-function dettachLisenerToNextButtondocument(handler) {
-  document.getElementById('buttonNext').removeEventListener('click', handler);
-}
