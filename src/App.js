@@ -9,12 +9,10 @@ import './styles/custom.css';
 import './styles/prog-tracker.css';
 
 export function App({ initialData }) {
-  
-  
   return (
     <div className="container">
-        <h1>Pipeline generator wizard</h1>
-      <h4>Certified Contiuous Integration </h4>
+      <h1>Pipeline generator wizard</h1>
+      <h4>Certified Continuous Integration</h4>
       <div>
         <MultiStep showNavigation={true} steps={steps} />
       </div>

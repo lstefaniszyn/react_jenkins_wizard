@@ -1,18 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { stat } from 'fs';
 
 const StepFour = props => {
-  const [status, setStatus] = useState('');
+  const [statusArtifactUpload, setStatusArtifactUpload] = useState('');
+  const [statusGitPush, setStatusGitPush] = useState('');
+
+  const statusData = {
+    inProgress: { text: 'IN PROGRESS', color: 'orange' },
+    passed: { text: 'PASSED', color: 'green' },
+    failed: { text: 'FAILED', color: 'red' },
+    skipped: { text: 'SKIPPED', color: 'grey' },
+    default: { text: '', color: 'black' }
+  };
+
+  const runStatusArtifactUpload = () => {
+    setStatusArtifactUpload(statusData.inProgress.text);
+  };
+
+  const runStatusGitPush = () => {
+    setStatusGitPush(statusData.inProgress.text);
+  };
+
+  const setColor = status => {
+    // console.log('Check to status:', status);
+    let data = Object.values(statusData).filter(
+      item => item.text === status
+    )[0];
+    // console.log('Item:', data);
+    // console.log('Status:', status, ' color: ', data.color);
+    return data.color;
+
+    // console.log('Set Color');
+    // let color = 'black';
+    // switch (item) {
+    //   case 'In Progress':
+    //     color = 'orange';
+    //     break;
+    //   case 'Passed':
+    //     color = 'green';
+    //     break;
+    //   case 'Failed':
+    //     color = 'red';
+    //     break;
+    //   case 'Skipped':
+    //     color = 'grey';
+    //     break;
+    //   default:
+    //     color = 'black';
+    // }
+    // return color;
+  };
+
+  useEffect(() => {
+    runStatusArtifactUpload();
+    runStatusGitPush();
+  }, []);
 
   return (
     <form>
       <div className="row">
         <div className="six columns">
-          <label>Updating data - {status} </label>
+          <label>Uploading artifact - </label>
+          <div
+            className="updateStatus"
+            style={{ color: setColor(statusArtifactUpload) }}
+          >
+            {statusArtifactUpload}
+          </div>
         </div>
       </div>
       <div className="row">
         <div className="six columns">
-          <label>Updating data - {status} </label>
+          <label>Push to Git - </label>
+          <div
+            className="updateStatus"
+            style={{ color: setColor(statusArtifactUpload) }}
+          >
+            {statusGitPush}
+          </div>
         </div>
       </div>
     </form>
