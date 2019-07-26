@@ -1,46 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-export class StepFour extends React.Component {
-  constructor () {
-    super()
-    this.state = { 
-      checked: '' 
-    }
-    this.handleCheckedChanged = this.handleCheckedChanged.bind(this);
-  }
+const StepFour = props => {
+  const [status, setStatus] = useState('');
 
-  handleCheckedChanged (event) {
-    this.setState({checked: event.target.checked})
-  }
-
-  render () {
-    return (
-      <div>
-        <div className='row'>
-          <div className='ten columns terms'>
-            <span>By clicking "Accept" I agree that:</span>
-            <ul className='docs-terms'>
-              <li>
-                I have read and accepted the <a href='http://google.com'>User Agreement</a>
-              </li>
-              <li>
-                I have read and accepted the <a href='http://google.com'>Privacy Policy</a>
-              </li>
-              <li>I am at least 18 years old</li>
-            </ul>
-            <label>
-              <input
-                type='checkbox'
-                //   defaultChecked={this.state.checked}
-                checked={this.state.checked}
-                onChange={this.handleCheckedChanged}
-                autoFocus
-              />
-              <span> Accept </span>{' '}
-            </label>
-          </div>
+  return (
+    <form>
+      <div className="row">
+        <div className="six columns">
+          <label>Updating data - {status} </label>
         </div>
       </div>
-    )
-  }
-}
+      <div className="row">
+        <div className="six columns">
+          <label>Updating data - {status} </label>
+        </div>
+      </div>
+    </form>
+  );
+};
+
+export { StepFour };
+
+// export class StepFour extends React.Component {
+//   constructor () {
+//     super()
+//     this.state = {
+//       checked: ''
+//     }
+//     this.handleCheckedChanged = this.handleCheckedChanged.bind(this);
+//   }
+
+//   handleCheckedChanged (event) {
+//     this.setState({checked: event.target.checked})
+//   }
+
+//   render () {
+//     return (
+//       <div>
+//         <div className='row'>
+//           <div className='ten columns terms'>
+//             <span>By clicking "Accept" I agree that:</span>
+//             <ul className='docs-terms'>
+//               <li>
+//                 I have read and accepted the <a href='http://google.com'>User Agreement</a>
+//               </li>
+//               <li>
+//                 I have read and accepted the <a href='http://google.com'>Privacy Policy</a>
+//               </li>
+//               <li>I am at least 18 years old</li>
+//             </ul>
+//             <label>
+//               <input
+//                 type='checkbox'
+//                 //   defaultChecked={this.state.checked}
+//                 checked={this.state.checked}
+//                 onChange={this.handleCheckedChanged}
+//                 autoFocus
+//               />
+//               <span> Accept </span>{' '}
+//             </label>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
