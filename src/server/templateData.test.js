@@ -1,17 +1,24 @@
 import { getTemplates } from './templateData';
-const mockAxios = require('axios');
-jest.mock('../../__mocks__/axios');
+import axios from 'axios';
 
 describe('Validate template json file', () => {
-  //   beforeAll(() => {
-  //     get.__setValue({ name: 'Smith' });
-  //   });
 
   it('should return given text', async () => {
+    jest.mock('../../__mocks__/axios');
     const data = await getTemplates();
-    expect(data.data).toEqual({ name: 'John' });
+    expect(data).toEqual({ name: 'John' });
     // expect(mockAxios.get).toHaveBeenCalled(
     //   'https://jsonplaceholder.typicode.com/photos'
     // );
+  });
+
+  it('should mock inside test', async () => {
+    jest.mock('axios');
+
+    const resp = { name: 'John' };
+    axios.get.mockResolvedValue(resp);
+
+    const data = await getTemplates();
+    expect(data).toEqual({ name: 'John' });
   });
 });

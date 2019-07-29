@@ -1,4 +1,4 @@
 const axios = {
-  get: jest.fn(() => Promise.resolve({ data: { name: 'John' } }))
+  get: jest.fn(() => Promise.resolve({ name: 'John' }))
 };
 module.exports = axios;
