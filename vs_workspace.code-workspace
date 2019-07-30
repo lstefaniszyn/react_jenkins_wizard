@@ -1,7 +1,49 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	]
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+      "files.autoSave": "afterDelay",
+      "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "explorer.confirmDelete": false,
+      "editor.formatOnSave": true,
+      "javascript.updateImportsOnFileMove.enabled": "always",
+      "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "prettier.singleQuote": true,
+      "git.autofetch": true,
+      "git.enableSmartCommit": true,
+      "npm.enableScriptExplorer": true,
+      "workbench.sideBar.location": "left"
+  },
+  "extensions": {
+    "recommendations": [
+      "aaron-bond.better-comments",
+      "alphabotsec.vscode-eclipse-keybindings",
+      "dbaeumer.vscode-eslint",
+      "donjayamanne.githistory",
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "formulahendry.auto-close-tag",
+      "formulahendry.auto-rename-tag",
+      "formulahendry.code-runner",
+      "ms-vscode.vscode-typescript-tslint-plugin",
+      "msjsdiag.vscode-react-native",
+      "Orta.vscode-jest",
+      "pranaygp.vscode-css-peek",
+      "rbbit.typescript-hero",
+      "ritwickdey.LiveServer",
+      "robinbentley.sass-indented",
+      "streetsidesoftware.code-spell-checker",
+      "xabikos.JavaScriptSnippets"
+    ]
+  }
 }
