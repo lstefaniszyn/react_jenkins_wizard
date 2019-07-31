@@ -5,24 +5,24 @@
     }
   ],
   "settings": {
-      "files.autoSave": "afterDelay",
-      "[typescript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-      },
-      "[html]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-      },
-      "explorer.confirmDelete": false,
-      "editor.formatOnSave": true,
-      "javascript.updateImportsOnFileMove.enabled": "always",
-      "[javascript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-      },
-      "prettier.singleQuote": true,
-      "git.autofetch": true,
-      "git.enableSmartCommit": true,
-      "npm.enableScriptExplorer": true,
-      "workbench.sideBar.location": "left"
+    "files.autoSave": "afterDelay",
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDelete": false,
+    "editor.formatOnSave": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.singleQuote": true,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "npm.enableScriptExplorer": true,
+    "workbench.sideBar.location": "left"
   },
   "extensions": {
     "recommendations": [
@@ -41,7 +41,6 @@
       "pranaygp.vscode-css-peek",
       "rbbit.typescript-hero",
       "ritwickdey.LiveServer",
-      "robinbentley.sass-indented",
       "streetsidesoftware.code-spell-checker",
       "xabikos.JavaScriptSnippets"
     ]

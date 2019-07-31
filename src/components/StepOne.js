@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getTemplates, findTemplate } from './../server/templateData.js';
 import { nextButton } from './commonActions';
+import { useGetTemplates } from './stepOne/ComponentTemplateForm';
+import { findTemplate } from './../server/templateData.js';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
-  const [templateNames, setTemplateNames] = useState([]);
+
+  const [templateNames, isError, isLoading] = useGetTemplates();
   const [templateData, setTemplateData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
@@ -15,14 +15,14 @@ export const StepOne = props => {
     props.updateTemplateData('firstName', event.target.value);
   };
 
+  const handleClickNextButton = event => {
+    console.log('clicked  NextButton');
+    console.log('Selected Template: ', templateData);
+  };
+
   const handleChangeTemplate = event => {
     console.log('Selected: ', event.target.value);
     setTemplateData(findTemplate(templateNames, event.target.value));
-  };
-
-  const handleClickNextButton = event => {
-    // console.log('clicked  NextButton');
-    console.log('Selected Template: ', templateData);
   };
 
   useEffect(
@@ -31,21 +31,6 @@ export const StepOne = props => {
       nextButton.setDisable(true);
 
       nextButton.attachListener(handleClickNextButton);
-      const fetchTemplates = async () => {
-        setIsError(false);
-        setIsLoading(true);
-        try {
-          const response = await getTemplates();
-          setTemplateNames(response.data);
-          nextButton.setDisable(false);
-        } catch (error) {
-          console.log('Error: ', error);
-          setIsError(true);
-          setTemplateNames([]);
-        }
-        setIsLoading(false);
-      };
-      fetchTemplates();
       return () => {
         nextButton.detachListener(handleClickNextButton);
       };

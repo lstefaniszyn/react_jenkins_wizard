@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { stat } from 'fs';
 
 const StepFour = props => {
   const [statusArtifactUpload, setStatusArtifactUpload] = useState('');
