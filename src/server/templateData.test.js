@@ -1,5 +1,8 @@
 describe('Validate template json file', () => {
-  beforeEach(() => jest.resetModules());
+  beforeEach(
+    //Node.js and Jest will cache modules you require. To test modules with side effects you’ll need to reset the module registry between tests
+    () => jest.resetModules()
+  );
 
   it('Return TemplateData with mock separate file', async () => {
     jest.mock('../../__mocks__/axios');
@@ -54,4 +57,13 @@ describe('Validate template json file', () => {
       expect(a + b).toBe(expected);
     }
   );
+
+  test.each`
+    a    | b    | expected
+    ${1} | ${1} | ${2}
+    ${1} | ${2} | ${3}
+    ${2} | ${1} | ${3}
+  `('returns $expected when $a is added $b', ({ a, b, expected }) => {
+    expect(a + b).toBe(expected);
+  });
 });
