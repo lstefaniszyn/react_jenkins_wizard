@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { nextButton } from './commonActions';
 import { useGetTemplates } from './stepOne/ComponentTemplateForm';
@@ -86,3 +87,8 @@ export const StepOne = props => {
     </div>
   );
 };
+
+// StepOne.PropTypes.shape({
+//   color: PropTypes.string,
+//   fontSize: PropTypes.number
+//   })
