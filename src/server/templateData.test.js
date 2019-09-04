@@ -1,7 +1,7 @@
 describe('Validate template json file', () => {
   beforeEach(() => jest.resetModules());
 
-  it('should return given text', async () => {
+  it('Return TemplateData with mock separate file', async () => {
     jest.mock('../../__mocks__/axios');
     const { getTemplates } = require('./templateData');
     const data = await getTemplates();
@@ -11,7 +11,7 @@ describe('Validate template json file', () => {
     // );
   });
 
-  it('should mock inside test', async () => {
+  it('Return TemplateData by mock method', async () => {
     const axios = require('axios');
     jest.mock('axios');
     const resp = { name: 'John_2' };
@@ -24,7 +24,7 @@ describe('Validate template json file', () => {
     expect(data).toEqual({ name: 'John_2' });
   });
 
-  it('mock version 3', async () => {
+  it('Return TemplateData by mock axios get implementation', async () => {
     jest.mock('axios', () => ({
       get: () => {
         return { name: 'John_3' };
@@ -34,4 +34,24 @@ describe('Validate template json file', () => {
     const data = await getTemplates();
     expect(data).toEqual({ name: 'John_3' });
   });
+
+  it('Return TemplateData by mock axios get implementation and with separate test data', async () => {
+    jest.mock('axios', () => ({
+      get: () => {
+        var testData_1 = require('../../__mock_data__/server/templateData_1.json');
+        return testData_1;
+      }
+    }));
+
+    const { getTemplates } = require('./templateData');
+    const data = await getTemplates();
+    expect(data).toEqual({ name: 'John_4' });
+  });
+
+  test.each([[1, 1, 2], [1, 2, 3], [2, 1, 3]])(
+    '.add(%i, %i)',
+    (a, b, expected) => {
+      expect(a + b).toBe(expected);
+    }
+  );
 });
