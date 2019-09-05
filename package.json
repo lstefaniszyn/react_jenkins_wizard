@@ -129,5 +129,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.17.0"
   }
 }
