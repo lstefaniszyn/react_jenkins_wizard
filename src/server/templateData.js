@@ -1,11 +1,9 @@
 import axios from 'axios';
-// const axios = require('axios');
 
-  async function getTemplates(){
+async function getTemplates() {
   //send API request to pull file with templates list
-    return await axios.get('https://jsonplaceholder.typicode.com/photos');
-};
-
+  return await axios.get('https://jsonplaceholder.typicode.com/photos');
+}
 
 function findTemplate(templateNames, title) {
   let filteredTemplate = templateNames.filter(
