@@ -28,7 +28,6 @@ describe('Validate template json file', () => {
     expect(response.data).toEqual(testData_1);
   });
 
-
   it('Return TemplateData with mock separate file - full', async () => {
     // Mock any GET request to /users
     // arguments for reply are (status, data, headers)
@@ -94,5 +93,62 @@ describe('Validate template json file', () => {
     } catch (error) {
       expect(error.message).toEqual('Request failed with status code 404');
     }
+  });
+
+  test.each`
+    templateNames                                                   | title                                                   | expected
+    ${[]}                                                           | ${'accusamus beatae ad facilis cum similique qui sunt'} | ${'Template was not found: accusamus beatae ad facilis cum similique qui sunt'}
+    ${require('../../__mock_data__/server/templateData_full.json')} | ${'unknown title'}                                      | ${'Template was not found: unknown title'}
+    ${'unknown object'}                                             | ${'unknown title'}                                      | ${'Unknown type'}
+    ${require('../../__mock_data__/server/templateData_full.json')} | ${1}                                                    | ${'Unknown type'}
+  `(
+    'returns "$expected" when search for "$title" in "$templateNames"',
+    ({ templateNames, title, expected }) => {
+      const { findTemplate } = require('./templateData');
+
+      try {
+        findTemplate(templateNames, title);
+      } catch (error) {
+        expect(error.message).toEqual(expected);
+      }
+    }
+  );
+
+  it('Find existing template from list of 1 array', () => {
+    const { findTemplate } = require('./templateData');
+
+    const templateNames = [
+      {
+        albumId: 1,
+        id: 1,
+        title: 'accusamus beatae ad facilis cum similique qui sunt',
+        url: 'https://via.placeholder.com/600/92c952',
+        thumbnailUrl: 'https://via.placeholder.com/150/92c952'
+      }
+    ];
+    const title = 'accusamus beatae ad facilis cum similique qui sunt';
+
+    const result = findTemplate(templateNames, title);
+    expect(result).toEqual(templateNames[0]);
+  });
+
+  it('Find existing template from list of bigger array', () => {
+    const { findTemplate } = require('./templateData');
+
+    const templateNames = require('../../__mock_data__/server/templateData_full.json');
+    const title = 'reprehenderit est deserunt velit ipsam';
+
+    const expected = [
+      {
+        albumId: 1,
+        id: 2,
+        title: 'reprehenderit est deserunt velit ipsam',
+        url: 'https://via.placeholder.com/600/771796',
+        thumbnailUrl: 'https://via.placeholder.com/150/771796'
+      }
+    ];
+
+    const result = findTemplate(templateNames, title);
+    expect(result).toEqual(expected[0]);
   });
 });

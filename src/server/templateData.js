@@ -6,13 +6,21 @@ async function getTemplates() {
 }
 
 function findTemplate(templateNames, title) {
+  if (!Array.isArray(templateNames)) {
+    throw new Error('Unknown type');
+  }
+
+  if (typeof title !== 'string') {
+    throw new Error('Unknown type');
+  }
+
   let filteredTemplate = templateNames.filter(
     template => template.title === title
   );
   if (filteredTemplate.length >= 1) {
     return filteredTemplate[0];
   } else {
-    throw ('Template was not found: ', title);
+    throw new Error('Template was not found: ' + title);
   }
 }
 
