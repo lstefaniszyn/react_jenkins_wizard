@@ -151,4 +151,6 @@ describe('Validate template json file', () => {
     const result = findTemplate(templateNames, title);
     expect(result).toEqual(expected[0]);
   });
+
+  it('', () => {});
 });
