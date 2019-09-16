@@ -88,6 +88,7 @@ export const StepOne = props => {
   );
 };
 
+export default StepOne;
 // StepOne.PropTypes.shape({
 //   color: PropTypes.string,
 //   fontSize: PropTypes.number
