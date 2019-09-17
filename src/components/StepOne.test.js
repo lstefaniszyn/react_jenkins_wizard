@@ -5,16 +5,35 @@ const { act } = require('react-dom/test-utils');
 
 let container = null;
 
+class NextButton extends React.Component {
+  render() {
+    return (
+      <button name="buttonNext" disabled="false">
+        Next
+      </button>
+    );
+  }
+}
+
 beforeEach(() => {
   // setup a DOM element as a render target
   var nextButtonElement = React.createElement(
     'button',
-    { id: 'buttonNext', disabled: false },
+    {
+      id: 'buttonNext',
+      style: {
+        display: 'none'
+      }
+    },
     'Next'
   );
   container = document.createElement('div', {}, [nextButtonElement]);
-  document.body.appendChild(container);
-  console.log(document.);
+  // container.appendChild(NextButton);
+  // console.log('Container:' + container.outerHTML);
+  // document.body.appendChild(container);
+  // console.log('Document:' + document.outerHTML);
+  // var ele = document.getElementById('buttonNext');
+  // console.log(ele.textContent);
 });
 
 afterEach(() => {
@@ -25,7 +44,7 @@ afterEach(() => {
 });
 
 it('Smoke - start StepOne', async () => {
-  act(() => {
-    render(<StepOne />, container);
-  });
+  // act(() => {
+  //   render(<StepOne />, container);
+  // });
 });
