@@ -3,6 +3,8 @@ import { unmountComponentAtNode, render } from 'react-dom';
 const { act } = require('react-dom/test-utils');
 
 const Hello = props => {
+  let el = document.getElementById('buttonNext');
+  console.log('Exists_2: ' + el.id);
   if (props.name) {
     return <h1>Hello, {props.name}!</h1>;
   } else {
@@ -22,10 +24,15 @@ describe('Fist Smoke test', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
-    container = document.createElement('div', {}, NextButton);
+    container = document.createElement('DIV');
+    document.body.appendChild(container);
+    let btn = document.createElement('BUTTON');
+    btn.innerHTML = 'Next';
+    btn.id = 'buttonNext';
+    btn.setAttribute('disabled', 'false');
+    container.appendChild(btn);
     // container.appendChild(NextButton);
     // document.body.appendChild(NextButton);
-    document.body.appendChild(container);
     console.log('Document: ' + document.body.outerHTML);
   });
 
@@ -38,6 +45,8 @@ describe('Fist Smoke test', () => {
 
   it('tes1', () => {
     act(() => {
+      let el = document.getElementById('buttonNext');
+      console.log('Exists: ' + el.id);
       render(<Hello />, container);
     });
     expect(container.textContent).toBe('Hey, stranger');

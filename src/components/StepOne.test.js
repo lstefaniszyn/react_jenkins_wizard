@@ -27,13 +27,18 @@ beforeEach(() => {
     },
     'Next'
   );
-  container = document.createElement('div', {}, [nextButtonElement]);
+  container = document.createElement('div');
+  document.body.appendChild(container);
+  let btn = document.createElement('BUTTON');
+  btn.innerHTML = 'Next';
+  btn.id = 'buttonNext';
+  btn.setAttribute('disabled', 'false');
+  container.appendChild(btn);
   // container.appendChild(NextButton);
-  // console.log('Container:' + container.outerHTML);
-  // document.body.appendChild(container);
-  // console.log('Document:' + document.outerHTML);
+  console.log('Container_1:' + container.outerHTML);
+  console.log('Document_1: ' + document.body.outerHTML);
   // var ele = document.getElementById('buttonNext');
-  // console.log(ele.textContent);
+  // console.log(document);
 });
 
 afterEach(() => {
@@ -44,7 +49,7 @@ afterEach(() => {
 });
 
 it('Smoke - start StepOne', async () => {
-  // act(() => {
-  //   render(<StepOne />, container);
-  // });
+  act(() => {
+    render(<StepOne />, container);
+  });
 });
