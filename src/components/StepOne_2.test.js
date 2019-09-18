@@ -3,8 +3,8 @@ import { unmountComponentAtNode, render } from 'react-dom';
 const { act } = require('react-dom/test-utils');
 
 const Hello = props => {
-  let el = document.getElementById('buttonNext');
-  console.log('Exists_2: ' + el.id);
+  // let el = document.getElementById('buttonNext');
+  // console.log('Exists_2: ' + el.id);
   if (props.name) {
     return <h1>Hello, {props.name}!</h1>;
   } else {
@@ -14,8 +14,8 @@ const Hello = props => {
 
 const NextButton = props => {
   return (
-    <button name="buttonNext" disabled="false">
-      Next
+    <button name="buttonNext" disabled={false}>
+      NextButton
     </button>
   );
 };
@@ -31,6 +31,8 @@ describe('Fist Smoke test', () => {
     btn.id = 'buttonNext';
     btn.setAttribute('disabled', 'false');
     container.appendChild(btn);
+    // ReactDOM.render(element, container[, callback])
+
     // container.appendChild(NextButton);
     // document.body.appendChild(NextButton);
     console.log('Document: ' + document.body.outerHTML);
@@ -45,10 +47,18 @@ describe('Fist Smoke test', () => {
 
   it('tes1', () => {
     act(() => {
-      let el = document.getElementById('buttonNext');
-      console.log('Exists: ' + el.id);
-      render(<Hello />, container);
+      // let el = document.getElementById('buttonNext');
+      // console.log('Exists: ' + el.id);
+      render(
+        <div>
+          <NextButton />
+          <Hello />
+        </div>,
+        container
+      );
+      // render(, container);
     });
-    expect(container.textContent).toBe('Hey, stranger');
+    console.log('Document_2: ' + document.body.outerHTML);
+    // expect(container.textContent).toBe('Hey, stranger');
   });
 });
