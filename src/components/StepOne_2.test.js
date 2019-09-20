@@ -1,10 +1,12 @@
 import React from 'react';
 import { unmountComponentAtNode, render } from 'react-dom';
 const { act } = require('react-dom/test-utils');
+import StepOne from './StepOne';
 
 const Hello = props => {
-  // let el = document.getElementById('buttonNext');
-  // console.log('Exists_2: ' + el.id);
+  console.log('Document_Hello: ' + document.body.outerHTML);
+  let el = document.getElementById('buttonNext');
+  console.log('Exists_2: ' + el.id);
   if (props.name) {
     return <h1>Hello, {props.name}!</h1>;
   } else {
@@ -24,13 +26,13 @@ describe('Fist Smoke test', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
-    container = document.createElement('DIV');
+    // container = document.createElement('BUTTON');
+    container = document.createElement('BUTTON');
+    container.innerHTML = 'Next';
+    container.id = 'buttonNext';
+    container.setAttribute('disabled', 'false');
+    // container.appendChild(btn);
     document.body.appendChild(container);
-    let btn = document.createElement('BUTTON');
-    btn.innerHTML = 'Next';
-    btn.id = 'buttonNext';
-    btn.setAttribute('disabled', 'false');
-    container.appendChild(btn);
     // ReactDOM.render(element, container[, callback])
 
     // container.appendChild(NextButton);
@@ -47,12 +49,13 @@ describe('Fist Smoke test', () => {
 
   it('tes1', () => {
     act(() => {
-      // let el = document.getElementById('buttonNext');
-      // console.log('Exists: ' + el.id);
+      let el = document.getElementById('buttonNext');
+      console.log('Exists: ' + el.id);
       render(
         <div>
-          <NextButton />
-          <Hello />
+          {/* <NextButton /> */}
+          {/* <Hello /> */}
+          <StepOne />
         </div>,
         container
       );
