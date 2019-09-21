@@ -11,13 +11,16 @@ export function useGetTemplates(username) {
   useEffect(
     () => {
       console.log('useEffect - useGetTemplates');
+      let toUpdate = true;
       const fetchTemplates = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
           const response = await getTemplates();
-          setTemplateNames(response.data);
-          nextButton.setDisable(false);
+          if (toUpdate) {
+            setTemplateNames(response.data);
+            nextButton.setDisable(false);
+          }
         } catch (error) {
           console.log('Error: ', error);
           setIsError(true);
@@ -26,7 +29,9 @@ export function useGetTemplates(username) {
         setIsLoading(false);
       };
       fetchTemplates();
-      return () => {};
+      return () => {
+        toUpdate = false;
+      };
     }, // eslint-disable-next-line
     []
   );

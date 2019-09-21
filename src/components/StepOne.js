@@ -28,7 +28,6 @@ export const StepOne = props => {
 
   useEffect(
     () => {
-      console.log('useEffect');
       nextButton.setDisable(true);
 
       nextButton.attachListener(handleClickNextButton);

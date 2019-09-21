@@ -2,6 +2,7 @@ import React from 'react';
 import { unmountComponentAtNode, render } from 'react-dom';
 const { act } = require('react-dom/test-utils');
 import StepOne from './StepOne';
+import { nextButton } from './commonActions';
 
 const Hello = props => {
   console.log('Document_Hello: ' + document.body.outerHTML);
@@ -16,7 +17,7 @@ const Hello = props => {
 
 const NextButton = props => {
   return (
-    <button name="buttonNext" disabled={false}>
+    <button id="buttonNext" disabled={true}>
       NextButton
     </button>
   );
@@ -26,12 +27,15 @@ describe('Fist Smoke test', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
-    // container = document.createElement('BUTTON');
+    // container = document.createElement('DIV');
     container = document.createElement('BUTTON');
     container.innerHTML = 'Next';
     container.id = 'buttonNext';
     container.setAttribute('disabled', 'false');
+    // container.disabled = true;
+
     // container.appendChild(btn);
+
     document.body.appendChild(container);
     // ReactDOM.render(element, container[, callback])
 
@@ -48,18 +52,15 @@ describe('Fist Smoke test', () => {
   });
 
   it('tes1', () => {
+    // let el = document.getElementById('buttonNext');
+    // console.log('Exists: ' + el.id);
+    // act(() => {
+    //   render(<NextButton />, container);
+    // });
+    console.log('Document_1: ' + document.body.outerHTML);
+
     act(() => {
-      let el = document.getElementById('buttonNext');
-      console.log('Exists: ' + el.id);
-      render(
-        <div>
-          {/* <NextButton /> */}
-          {/* <Hello /> */}
-          <StepOne />
-        </div>,
-        container
-      );
-      // render(, container);
+      render(<StepOne />, container);
     });
     console.log('Document_2: ' + document.body.outerHTML);
     // expect(container.textContent).toBe('Hey, stranger');
