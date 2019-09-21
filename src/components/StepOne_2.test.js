@@ -27,21 +27,14 @@ describe('Fist Smoke test', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
-    // container = document.createElement('DIV');
-    container = document.createElement('BUTTON');
-    container.innerHTML = 'Next';
-    container.id = 'buttonNext';
-    container.setAttribute('disabled', 'false');
-    // container.disabled = true;
-
+    container = document.createElement('DIV');
+    // let btn = document.createElement('BUTTON');
+    // btn.innerHTML = 'Next';
+    // btn.id = 'buttonNext';
+    // btn.setAttribute('disabled', 'false');
     // container.appendChild(btn);
 
     document.body.appendChild(container);
-    // ReactDOM.render(element, container[, callback])
-
-    // container.appendChild(NextButton);
-    // document.body.appendChild(NextButton);
-    console.log('Document: ' + document.body.outerHTML);
   });
 
   afterEach(() => {
@@ -52,17 +45,17 @@ describe('Fist Smoke test', () => {
   });
 
   it('tes1', () => {
-    // let el = document.getElementById('buttonNext');
-    // console.log('Exists: ' + el.id);
-    // act(() => {
-    //   render(<NextButton />, container);
-    // });
     console.log('Document_1: ' + document.body.outerHTML);
 
     act(() => {
-      render(<StepOne />, container);
+      render(
+        <div>
+          <NextButton />
+          <StepOne />
+        </div>,
+        container
+      );
     });
     console.log('Document_2: ' + document.body.outerHTML);
-    // expect(container.textContent).toBe('Hey, stranger');
   });
 });
