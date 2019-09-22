@@ -35,6 +35,9 @@ describe('Fist Smoke test', () => {
     // container.appendChild(btn);
 
     document.body.appendChild(container);
+
+    //Node.js and Jest will cache modules you require. To test modules with side effects you’ll need to reset the module registry between tests
+    jest.resetModules();
   });
 
   afterEach(() => {
@@ -44,9 +47,7 @@ describe('Fist Smoke test', () => {
     container = null;
   });
 
-  it('tes1', () => {
-    console.log('Document_1: ' + document.body.outerHTML);
-
+  it('Smoke test - Render Step One', () => {
     act(() => {
       render(
         <div>
@@ -57,5 +58,76 @@ describe('Fist Smoke test', () => {
       );
     });
     console.log('Document_2: ' + document.body.outerHTML);
+  });
+
+  it('Step One - waiting to load templates', () => {
+    act(() => {
+      render(
+        <div>
+          <NextButton />
+          <StepOne />
+        </div>,
+        container
+      );
+    });
+    //Template list is still loading.
+    expect(document.querySelector('.load-status').textContent).toBe(
+      'Loading ...'
+    );
+
+    //It is in loading phase, therefor NextButton has to be disabled
+    expect(document.querySelector('button#buttonNext').disabled).toBe(true);
+  });
+
+  it('Step One - real list of templates', async () => {
+    //mock
+    // const [templateNames, isError, isLoading] = useGetTemplates();
+
+    // import { useGetTemplates } from './stepOne/ComponentTemplateForm';
+    // const { useGetTemplates } = require('./stepOne/ComponentTemplateForm');
+    // jest.mock('useGetTemplates');
+    // const resp = { name: 'John_2' };
+
+    const useGetTemplates = jest.fn();
+
+    useGetTemplates.mockReturnValue([], true, false);
+
+
+// foo.js
+module.exports = function() {
+  // some implementation;
+};
+
+// test.js
+jest.mock('./stepOne/ComponentTemplateForm'); // this happens automatically with automocking
+const foo = require('../foo');
+
+// foo is a mock function
+foo.mockImplementation(() => 42);
+foo();
+
+
+
+
+
+    act(() => {
+      render(
+        <div>
+          <NextButton />
+          <StepOne />
+        </div>,
+        container
+      );
+    });
+
+    //Template list is still loading.
+    expect(document.querySelector('.load-status').textContent).toBe(
+      'Loading ...'
+    );
+
+    //It is in loading phase, therefor NextButton has to be disabled
+    expect(document.querySelector('button#buttonNext').disabled).toBe(true);
+
+    console.log('Document_3: ' + document.body.outerHTML);
   });
 });

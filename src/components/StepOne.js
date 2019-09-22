@@ -71,11 +71,13 @@ export const StepOne = props => {
         <div className="six columns">
           <label>Template list</label>
           {isError && (
-            <div>Something went wrong with getting Templates....</div>
+            <div className="load-status">
+              Something went wrong with getting Templates....
+            </div>
           )}
 
           {isLoading ? (
-            <div>Loading ...</div>
+            <div className="load-status">Loading ...</div>
           ) : (
             <select className="u-full-width" onChange={handleChangeTemplate}>
               {getDivTemplateNames()}

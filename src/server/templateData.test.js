@@ -152,5 +152,4 @@ describe('Validate template json file', () => {
     expect(result).toEqual(expected[0]);
   });
 
-  it('', () => {});
 });
