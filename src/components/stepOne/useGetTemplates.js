@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTemplates } from '../../server/templateData';
 import { nextButton } from '../commonActions';
 
-export function useGetTemplates() {
+function useGetTemplates() {
   const [templateNames, setTemplateNames] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -17,8 +17,10 @@ export function useGetTemplates() {
         setIsLoading(true);
         try {
           const response = await getTemplates();
+          console.log(`Response: ${response.data}`);
           if (toUpdate) {
             setTemplateNames(response.data);
+            console.log('nextButton');
             nextButton.setDisable(false);
           }
         } catch (error) {
@@ -36,5 +38,8 @@ export function useGetTemplates() {
     []
   );
 
-  return [ templateNames, isError, isLoading ];
+  //TODO  this should be changed to {} not [].
+  return [templateNames, isError, isLoading];
 }
+
+export { useGetTemplates };

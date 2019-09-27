@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { nextButton } from './commonActions';
-import { useGetTemplates } from './stepOne/ComponentTemplateForm';
+import { useGetTemplates } from './stepOne/useGetTemplates';
 import { findTemplate } from './../server/templateData.js';
 
 export const StepOne = props => {
@@ -9,6 +9,10 @@ export const StepOne = props => {
 
   const [templateNames, isError, isLoading] = useGetTemplates();
   const [templateData, setTemplateData] = useState({});
+
+  console.log(
+    `templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
+  );
 
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);

@@ -1,8 +1,17 @@
 import React from 'react';
 import { unmountComponentAtNode, render } from 'react-dom';
 const { act } = require('react-dom/test-utils');
+import Adapter from 'enzyme-adapter-react-16';
+
 import StepOne from './StepOne';
 import { nextButton } from './commonActions';
+
+import { shallow } from 'enzyme';
+import Enzyme from 'enzyme';
+Enzyme.configure({ adapter: new Adapter() });
+
+import { renderHook } from '@testing-library/react-hooks';
+import { useGetTemplates } from './stepOne/useGetTemplates';
 
 const Hello = props => {
   console.log('Document_Hello: ' + document.body.outerHTML);
@@ -79,36 +88,59 @@ describe('Fist Smoke test', () => {
     expect(document.querySelector('button#buttonNext').disabled).toBe(true);
   });
 
+  it('Step One - check default status of useGetTemplates', () => {
+    const { result } = renderHook(() => useGetTemplates());
+    const [templateNames, isError, isLoading] = result.current;
+    expect(isError).toBe(false);
+
+    // const { result } = renderHook(() => useGetTemplates());
+
+    // const [templateNames, isError, isLoading] = useGetTemplates();
+    // expect(templateNames).toEqual([]);
+    // expect(isError).toEqual(false);
+    // expect(isLoading).toEqual(false);
+  });
+
   it('Step One - real list of templates', async () => {
+    /* We will use Enzyme to shallow render the component. */
+
+    const wrapper = shallow(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>
+    );
+
+    // expect(wrapper.find('.value').text()).toEqual('0');
+
     //mock
     // const [templateNames, isError, isLoading] = useGetTemplates();
+    jest.mock('./stepOne/useGetTemplates');
+
+    // [templateNames, isError, isLoading] = useGetTemplates();
+    useGetTemplates.mockReturnValue(['test1', 'test2'], false, false);
 
     // import { useGetTemplates } from './stepOne/ComponentTemplateForm';
     // const { useGetTemplates } = require('./stepOne/ComponentTemplateForm');
     // jest.mock('useGetTemplates');
     // const resp = { name: 'John_2' };
 
-    const useGetTemplates = jest.fn();
+    // const useGetTemplates = jest.fn();
 
-    useGetTemplates.mockReturnValue([], true, false);
+    // useGetTemplates.mockReturnValue([], true, false);
 
+    // foo.js
+    // module.exports = function() {
+    //   // some implementation;
+    // };
 
-// foo.js
-module.exports = function() {
-  // some implementation;
-};
+    // test.js
+    // jest.mock('./stepOne/ComponentTemplateForm'); // this happens automatically with automocking
+    // const foo = require('../foo');
 
-// test.js
-jest.mock('./stepOne/ComponentTemplateForm'); // this happens automatically with automocking
-const foo = require('../foo');
-
-// foo is a mock function
-foo.mockImplementation(() => 42);
-foo();
-
-
-
-
+    // // foo is a mock function
+    // foo.mockImplementation(() => 42);
+    // foo();
 
     act(() => {
       render(
