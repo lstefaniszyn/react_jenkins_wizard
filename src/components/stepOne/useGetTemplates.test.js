@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-test-renderer';
 import { useGetTemplates } from './useGetTemplates';
 import { getTemplates } from '../../server/templateData';
+import { nextButton } from '../commonActions';
 jest.unmock('axios');
 jest.mock('../../server/templateData'); // this happens automatically with automocking
 jest.mock('../commonActions');
@@ -14,6 +15,9 @@ describe('Test custom hook - useGetTemplates', () => {
     () => {
       jest.resetModules();
       getTemplates.mockClear();
+      nextButton.setDisable.mockClear();
+      nextButton.attachListener.mockClear();
+      nextButton.detachListener.mockClear();
     }
   );
 
@@ -38,76 +42,41 @@ describe('Test custom hook - useGetTemplates', () => {
     getTemplates.mockReturnValue({ data: { name: 'Hello' } });
     const { result, waitForNextUpdate } = renderHook(() => useGetTemplates());
     var [templateNames, isError, isLoading] = result.current;
-    console.log(
-      `BEFORE templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
-    );
+
     await waitForNextUpdate();
 
     [templateNames, isError, isLoading] = result.current;
-    console.log(
-      `AFTER  templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
-    );
 
     expect(isLoading).toBe(false);
-    expect(isError).toBe(true);
+    expect(isError).toBe(false);
     expect(templateNames).toStrictEqual({ name: 'Hello' });
   });
 
   it('when received positive response from getTemplates', async () => {
     var testData = require('../../../__mock_data__/server/templateData_full.json');
+    getTemplates.mockReturnValue({ data: testData });
 
-    // jest.mock('../../server/templateData');
-    const { getTemplates } = require('../../server/templateData');
-    // var testData = require('../../../__mock_data__/server/templateData_full.json');
-    getTemplates.mockReturnValue(testData);
-
-    jest.mock('../commonActions');
-    const nextButton = require('../commonActions');
-    nextButton.nextButton = {
-      setDisable: jest.fn(state => {
-        console.log(`Set nextButton setDisable: ${state}`);
-      }),
-      attachListener: jest.fn(handler => {
-        console.log(`Set nextButton attachListener: ${handler}`);
-      }),
-      detachListener: jest.fn(handler => {
-        console.log(`Set nextButton detachListener ${handler}`);
-      })
-    };
-
-    // [templateNames, isError, isLoading] = useGetTemplates();
-    // useGetTemplates.mockReturnValue([['hello1', 'hello2'], false, false]);
-    // var testData = require('../../../__mock_data__/server/templateData_full.json');
-    // getTemplates.mockReturnValue(testData);
-
-    // act(() => {
-    //   const { useGetTemplates } = require('./useGetTemplates');
-    // });
-
-    var [templateNames, isError, isLoading] = [[], null, null];
-
-    const { result, waitForNextUpdate } = renderHook(() => useGetTemplates());
-
-    await act(async () => {
-      [templateNames, isError, isLoading] = result.current;
-      console.log(
-        `BEFORE templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
-      );
+    nextButton.setDisable.mockImplementation(state => {
+      console.log(`Set nextButton setDisable: ${state}`);
     });
 
-    // await waitForNextUpdate();
+    // attachListener: jest.fn(handler => {
+    //   console.log(`Set nextButton attachListener: ${handler}`);
+    // }),
+    // detachListener: jest.fn(handler => {
+    //   console.log(`Set nextButton detachListener ${handler}`);
+    // })
+    // };
+
+    const { result, waitForNextUpdate } = renderHook(() => useGetTemplates());
+    var [templateNames, isError, isLoading] = result.current;
+    await waitForNextUpdate();
 
     [templateNames, isError, isLoading] = result.current;
-    console.log(
-      `AFTER  templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
-    );
 
     expect(isLoading).toBe(false);
     expect(isError).toBe(false);
-    expect(templateNames).toStrictEqual(['hello1', 'hello2']);
-
-    // testing-custom-react-hooks
-    //  https://doppelmutzi.github.io/testing-custom-react-hooks/
+    expect(templateNames).toStrictEqual(testData);
   });
 
   // it('when received error response from getTemplates', async () => {
