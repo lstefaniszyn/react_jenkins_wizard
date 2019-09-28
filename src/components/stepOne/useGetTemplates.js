@@ -20,15 +20,16 @@ function useGetTemplates() {
           console.log(`Response: ${response.data}`);
           if (toUpdate) {
             setTemplateNames(response.data);
-            console.log('nextButton');
             nextButton.setDisable(false);
+            setIsLoading(false);
           }
         } catch (error) {
           console.log('Error: ', error);
           setIsError(true);
           setTemplateNames([]);
+          setIsLoading(false);
         }
-        setIsLoading(false);
+        
       };
       fetchTemplates();
       return () => {
@@ -38,7 +39,6 @@ function useGetTemplates() {
     []
   );
 
-  //TODO  this should be changed to {} not [].
   return [templateNames, isError, isLoading];
 }
 
