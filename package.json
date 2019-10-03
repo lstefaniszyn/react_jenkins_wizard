@@ -86,6 +86,7 @@
       "!src/**/*.d.ts"
     ],
     "setupFiles": [
+      "./src/setupTests.js",
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [],
@@ -120,6 +121,9 @@
       "jsx",
       "node"
     ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
@@ -135,6 +139,7 @@
     "axios-mock-adapter": "^1.17.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.4.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest-environment-enzyme": "^7.1.1",
     "jest-enzyme": "^7.1.1",
