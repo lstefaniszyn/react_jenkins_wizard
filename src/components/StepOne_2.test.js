@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'
+import {render, fireEvent} from '@testing-library/react'
+
 import { unmountComponentAtNode } from 'react-dom';
 
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { shallow, mount } from 'enzyme';
 
 import StepOne from './StepOne';
 import { nextButton } from './commonActions';
 import { useGetTemplates } from './stepOne/useGetTemplates';
-
-import { render, fireEvent } from '@testing-library/react';
-const { act } = require('react-dom/test-utils');
 
 /* 
 We should use standard React Test Library 
