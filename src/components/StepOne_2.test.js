@@ -1,8 +1,7 @@
-import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
-
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import { unmountComponentAtNode } from 'react-dom';
-
 
 import StepOne from './StepOne';
 import { nextButton } from './commonActions';
@@ -55,7 +54,6 @@ const NextButton = props => {
 
 describe('Fist Smoke test', () => {
   let container = null;
-  configure({ adapter: new Adapter() });
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('DIV');
