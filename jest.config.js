@@ -1,7 +1,10 @@
 module.exports = {
   verbose: true,
+  
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  coverageDirectory: './coverage',
   setupFiles: ['react-app-polyfill/jsdom'],
   setupFilesAfterEnv: ['./src/setupTests.js'],
   testMatch: [

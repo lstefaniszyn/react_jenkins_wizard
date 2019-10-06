@@ -22,12 +22,30 @@
     "git.autofetch": true,
     "git.enableSmartCommit": true,
     "npm.enableScriptExplorer": true,
-    "workbench.sideBar.location": "left"
+    "workbench.sideBar.location": "left",
+    "jest.showCoverageOnLoad": true,
+    "window.zoomLevel": 0,
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "testExplorer.addToEditorContextMenu": true,
+    "testExplorer.showOnRun": true,
+    "testExplorer.sort": "byLocationWithSuitesFirst",
+    "jestTestExplorer.debugOutput": "integratedTerminal",
+    "testExplorer.showCollapseButton": false,
+    "testExplorer.hideEmptyLog": false,
+    "jest.pathToConfig": "jest.config.js",
+    "jest.coverageFormatter": "GutterFormatter",
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
   },
   "extensions": {
     "recommendations": [
       "aaron-bond.better-comments",
       "alphabotsec.vscode-eclipse-keybindings",
+      "Angular.ng-template",
+      "connorshea.vscode-test-explorer-status-bar",
       "dbaeumer.vscode-eslint",
       "donjayamanne.githistory",
       "eamodio.gitlens",
@@ -35,13 +53,25 @@
       "formulahendry.auto-close-tag",
       "formulahendry.auto-rename-tag",
       "formulahendry.code-runner",
+      "hbenl.vscode-test-explorer",
+      "HookyQR.beautify",
+      "markis.code-coverage",
+      "ms-azuretools.vscode-docker",
       "ms-vscode.vscode-typescript-tslint-plugin",
       "msjsdiag.vscode-react-native",
+      "nrwl.angular-console",
       "Orta.vscode-jest",
+      "PKief.material-icon-theme",
       "pranaygp.vscode-css-peek",
+      "quicktype.quicktype",
       "rbbit.typescript-hero",
       "ritwickdey.LiveServer",
+      "robinbentley.sass-indented",
+      "rtbenfield.vscode-jest-test-adapter",
+      "ryanluker.vscode-coverage-gutters",
+      "secanis.jenkinsfile-support",
       "streetsidesoftware.code-spell-checker",
+      "wesbos.theme-cobalt2",
       "xabikos.JavaScriptSnippets"
     ]
   }
