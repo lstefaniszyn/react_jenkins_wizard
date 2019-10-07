@@ -23,7 +23,7 @@ We use Enzyme https://airbnb.io/enzyme/
 Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output. You can also manipulate, traverse, and in some ways simulate runtime given the output. 
 */
 
-//TODO : decide etiher testing-library/react  OR  Enzyme
+//TODO : decide either testing-library/react  OR  Enzyme
 /* ReactTestUtils gives you the bare minimum to test a React component. I haven't seen it being used for big applications.
 
 Enzyme and react-testing-library are both good libraries that give you all the tools you need to test your application. They have two different philosophies though.
@@ -54,19 +54,22 @@ const NextButton = props => {
 
 describe('Fist Smoke test', () => {
   let container = null;
+
+  beforeAll(() => {
+    jest.mock('./stepOne/useGetTemplates');
+  });
+
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('DIV');
-    // let btn = document.createElement('BUTTON');
-    // btn.innerHTML = 'Next';
-    // btn.id = 'buttonNext';
-    // btn.setAttribute('disabled', 'false');
-    // container.appendChild(btn);
-
     document.body.appendChild(container);
 
     //Node.js and Jest will cache modules you require. To test modules with side effects you’ll need to reset the module registry between tests
     jest.resetModules();
+  });
+
+  afterAll(() => {
+    jest.unmock('./stepOne/useGetTemplates');
   });
 
   afterEach(() => {
@@ -76,37 +79,51 @@ describe('Fist Smoke test', () => {
     container = null;
   });
 
-  test('Smoke test - Render Step One', () => {
-    // https://testing-library.com/docs/dom-testing-library/api-queries
 
-    render(
-      <div>
-        <NextButton />
-        <StepOne />
-      </div>,
-      container
-    );
+const renderStepOne = (() => {
+  render(
+    <div>
+      <NextButton />
+      <StepOne />
+    </div>,
+    container
+  );
+});
+
+  test('Smoke test - Render Step One ', async() => {
+    // https://testing-library.com/docs/dom-testing-library/api-queries
+    // https://react-testing-examples.com/jest-rtl/
+    // https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples
+
+    //TODO:  https://github.com/testing-library/react-testing-library#installation
+    
+    const { getByText } = renderStepOne();
+    await waitForElement(() =>   getByText(/Loading .../));
     console.log('Document_2: ' + document.body.outerHTML);
   });
 
-  test('Step One - waiting to load templates', () => {
-    render(
-      <div>
-        <NextButton />
-        <StepOne />
-      </div>,
-      container
-    );
+  test('Step One - waiting to load templates', async() => {
+    let templateNames = { name: 'Hello' };
+    let isError = true;
+    let isLoading = false;
+
+    const { useGetTemplates } = require('./stepOne/useGetTemplates');
+
+    useGetTemplates.mockReturnValue([templateNames, isError, isLoading]);
+
+    await waitForElement(() =>   getByText(container, /Something went wrong with getting Templates..../));
+    console.log('Document_3: ' + document.body.outerHTML);
+
     //Template list is still loading.
-    expect(document.querySelector('.load-status').textContent).toBe(
-      'Loading ...'
+    // expect(document.querySelector('.load-status').textContent).toBe(
+    //   'Loading ...'
     );
 
     //It is in loading phase, therefor NextButton has to be disabled
     expect(document.querySelector('button#buttonNext').disabled).toBe(true);
   });
 
-  test('Step One - check default status of useGetTemplates', () => {
+  test('Step One - check default status of useGetTemplates  ', () => {
     const { result } = renderHook(() => useGetTemplates());
     const [templateNames, isError, isLoading] = result.current;
     expect(isError).toBe(false);
@@ -119,9 +136,7 @@ describe('Fist Smoke test', () => {
     // expect(isLoading).toEqual(false);
   });
 
-  test('Step One - real list of templates', async () => {
-    /* We will use Enzyme to shallow render the component. */
-
+  test('Step One - real list of templates  ', async () => {
     //mock
     // const [templateNames, isError, isLoading] = useGetTemplates();
     // jest.mock('./stepOne/useGetTemplates');
