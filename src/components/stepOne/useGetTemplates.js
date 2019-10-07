@@ -10,21 +10,19 @@ function useGetTemplates() {
 
   useEffect(
     () => {
-      console.log('useEffect - useGetTemplates');
       let toUpdate = true;
       const fetchTemplates = async () => {
         setIsError(false);
         setIsLoading(true);
         try {
           const response = await getTemplates();
-          console.log(`Response: ${response.data}`);
           if (toUpdate) {
             setTemplateNames(response.data);
             nextButton.setDisable(false);
             setIsLoading(false);
           }
         } catch (error) {
-          console.log('Error: ', error);
+          console.error('Error: ', error);
           setIsError(true);
           setTemplateNames([]);
           setIsLoading(false);

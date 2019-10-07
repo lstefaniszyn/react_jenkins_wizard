@@ -79,28 +79,24 @@ describe('Fist Smoke test', () => {
   test('Smoke test - Render Step One', () => {
     // https://testing-library.com/docs/dom-testing-library/api-queries
 
-    act(() => {
-      render(
-        <div>
-          <NextButton />
-          <StepOne />
-        </div>,
-        container
-      );
-      console.log('Document_2: ' + document.body.outerHTML);
-    });
+    render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>,
+      container
+    );
+    console.log('Document_2: ' + document.body.outerHTML);
   });
 
   test('Step One - waiting to load templates', () => {
-    act(() => {
-      render(
-        <div>
-          <NextButton />
-          <StepOne />
-        </div>,
-        container
-      );
-    });
+    render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>,
+      container
+    );
     //Template list is still loading.
     expect(document.querySelector('.load-status').textContent).toBe(
       'Loading ...'
@@ -125,15 +121,6 @@ describe('Fist Smoke test', () => {
 
   test('Step One - real list of templates', async () => {
     /* We will use Enzyme to shallow render the component. */
-
-    const wrapper = shallow(
-      <div>
-        <NextButton />
-        <StepOne />
-      </div>
-    );
-    console.log('Wrapper: ' + wrapper.html());
-    // expect(wrapper.find('.value').text()).toEqual('0');
 
     //mock
     // const [templateNames, isError, isLoading] = useGetTemplates();
@@ -164,15 +151,13 @@ describe('Fist Smoke test', () => {
     // foo.mockImplementation(() => 42);
     // foo();
 
-    act(() => {
-      render(
-        <div>
-          <NextButton />
-          <StepOne />
-        </div>,
-        container
-      );
-    });
+    render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>,
+      container
+    );
 
     //Template list is still loading.
     expect(document.querySelector('.load-status').textContent).toBe(

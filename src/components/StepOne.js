@@ -10,10 +10,6 @@ export const StepOne = props => {
   const [templateNames, isError, isLoading] = useGetTemplates();
   const [templateData, setTemplateData] = useState({});
 
-  console.log(
-    `templateNames = ${templateNames}, isError = ${isError}, isLoading = ${isLoading}`
-  );
-
   const handleOnChangeFirstName = event => {
     setFirstName(event.target.value);
     console.log('FirstName: ', event.target.value);
