@@ -6,9 +6,7 @@ import { findTemplate } from './../server/templateData.js';
 
 export const StepOne = props => {
   const [firstName, setFirstName] = useState('');
-
   const [templateNames, isError, isLoading] = useGetTemplates();
-  console.log("[templateNames, isError, isLoading]: " + [templateNames, isError, isLoading]);
   const [templateData, setTemplateData] = useState({});
 
   const handleOnChangeFirstName = event => {

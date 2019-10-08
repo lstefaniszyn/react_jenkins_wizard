@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { unmountComponentAtNode } from 'react-dom';
 
@@ -74,36 +74,79 @@ describe('Fist Smoke test', () => {
 
   afterEach(() => {
     // cleanup on exiting
+    jest.clearAllMocks();
     unmountComponentAtNode(container);
     container.remove();
     container = null;
   });
 
+  const renderStepOne = () => {
+    return render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>,
+      container
+    );
+  };
 
-const renderStepOne = (() => {
-  render(
-    <div>
-      <NextButton />
-      <StepOne />
-    </div>,
-    container
-  );
-});
-
-  test('Smoke test - Render Step One ', async() => {
+  test('Smoke test - Render Step One ', async () => {
     // https://testing-library.com/docs/dom-testing-library/api-queries
     // https://react-testing-examples.com/jest-rtl/
     // https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples
 
     //TODO:  https://github.com/testing-library/react-testing-library#installation
-    
-    const { getByText } = renderStepOne();
-    await waitForElement(() =>   getByText(/Loading .../));
+
+    const { getByText } = render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>
+    );
+    await waitForElement(() => getByText(/Loading .../));
     console.log('Document_2: ' + document.body.outerHTML);
   });
 
-  test('Step One - waiting to load templates', async() => {
-    let templateNames = { name: 'Hello' };
+  test('Step One - waiting to load templates', async () => {
+    let templateNames = {};
+    let isError = true;
+    let isLoading = false;
+
+    // const [templateNames, isError, isLoading] = useGetTemplates();
+
+    // const useStateSpy = jest.spyOn(StepOne, 'useGetTemplates')
+    // useStateSpy.mockImplementation((init) => [templateNames, isError, isLoading]);
+
+    const { getByText, container } = render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>
+    );
+
+    // const { container } = render(<App />);
+    // const countValue = getByTestId(container, "countvalue");
+    // expect(countValue.textContent).toBe("0");
+
+    await waitForElement(() =>
+      getByText(container, /Something went wrong with getting Templates..../)
+    );
+
+    console.log('Document_3: ' + document.body.outerHTML);
+
+    // expect(setState).toHaveBeenCalledWith(1);
+
+    //Template list is still loading.
+    // expect(document.querySelector('.load-status').textContent).toBe(
+    //   'Loading ...'
+    // );
+
+    //It is in loading phase, therefor NextButton has to be disabled
+    // expect(document.querySelector('button#buttonNext').disabled).toBe(true);
+  });
+
+  test('Step One - waiting to load templates', async () => {
+    let templateNames = {};
     let isError = true;
     let isLoading = false;
 
@@ -111,13 +154,22 @@ const renderStepOne = (() => {
 
     useGetTemplates.mockReturnValue([templateNames, isError, isLoading]);
 
-    await waitForElement(() =>   getByText(container, /Something went wrong with getting Templates..../));
+    const { getByText, container } = render(
+      <div>
+        <NextButton />
+        <StepOne />
+      </div>
+    );
+    expect(useGetTemplates).toHaveBeenCalledTimes(1);
+    await waitForElement(() =>
+      getByText(container, /Something went wrong with getting Templates..../)
+    );
     console.log('Document_3: ' + document.body.outerHTML);
 
     //Template list is still loading.
     // expect(document.querySelector('.load-status').textContent).toBe(
     //   'Loading ...'
-    );
+    // );
 
     //It is in loading phase, therefor NextButton has to be disabled
     expect(document.querySelector('button#buttonNext').disabled).toBe(true);
