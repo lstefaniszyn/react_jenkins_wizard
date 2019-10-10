@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, waitForElement, fireEvent } from '@testing-library/react';
 import { StateMock } from '@react-mock/state';
-import { StatefulCounter } from './StatefulCounter';
+import { StatefulCounter } from './stateMockForClass';
 
-// Hoist helper functions (but not vars) to reuse between test cases
+//REMARK: It works only with Class structures.  No useState()
+
 const renderComponent = ({ count, number }) =>
   render(
-    <StateMock state={{ count, number }} number={{ i: 2 }}>
+    <StateMock state={{ count, number }}>
       <StatefulCounter />
     </StateMock>
   );
@@ -18,8 +19,6 @@ it('renders initial count', async () => {
   console.log(container.innerHTML.toString());
 
   await waitForElement(() => getByText(/clicked 5 times/i));
-  await waitForElement(() => getByText(/and number is 2/i));
-  await waitForElement(() => getByText(/text is 2/i));
 });
 
 it('increments count', async () => {

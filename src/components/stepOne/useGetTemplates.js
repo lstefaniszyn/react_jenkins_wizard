@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTemplates } from '../../server/templateData';
 import { nextButton } from '../commonActions';
 
-function useGetTemplates() {
+function useGetTemplates(init) {
   const [templateNames, setTemplateNames] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);

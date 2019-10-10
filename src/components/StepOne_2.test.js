@@ -155,8 +155,9 @@ describe('Fist Smoke test', () => {
     // useGetTemplates.mockReturnValue([templateNames, isError, isLoading]);
 
     //TODO:   check building mock for useStat https://gist.github.com/mauricedb/eb2bae5592e3ddc64fa965cde4afe7bc
+    const mockSetState = jest.fn();
     jest.mock('./stepOne/useGetTemplates', () => ({
-      useGetTemplates: () => [{}, true, false]
+      useGetTemplates: init => [init, mockSetState]
     }));
 
     const { getByText, container } = render(
@@ -165,7 +166,7 @@ describe('Fist Smoke test', () => {
         <StepOne />
       </div>
     );
-    // expect(useGetTemplates).toHaveBeenCalledTimes(1);
+    expect(mockSetState).toHaveBeenCalledWith(2);
     await waitForElement(() =>
       getByText(container, /Something went wrong with getting Templates..../)
     );
