@@ -1,5 +1,5 @@
 import { useCounter } from './useStateMock';
-import { useMyHook, Example } from './useMyHook';
+import { Example } from './useMyHook';
 
 const mockSetState = jest.fn();
 
@@ -8,9 +8,6 @@ jest.mock('react', () => ({
 }));
 
 // jest.mock('./useMyHook');
-jest.mock('./useMyHook', () => ({
-  useMyHook: () => [1, 2, 3]
-}));
 
 beforeAll(() => {});
 
@@ -31,19 +28,24 @@ test('Can increment from 1 to 2', () => {
   expect(mockSetState).toHaveBeenCalledWith(2);
 });
 
-test('check custom Hook', () => {
+test('check custom Hook with Mock', () => {
+  const { useMyHook } = require('./useMyHook');
+  jest.mock('./useMyHook');
+  useMyHook.mockReturnValue([3, 4, 5]);
+
   const [value1, value2, value3] = useMyHook();
-  console.log([value1, value2, value3]);
-  expect([value1, value2, value3]).toEqual([1, 2, 3]);
+  expect([value1, value2, value3]).toEqual([3, 4, 5]);
 });
 
-test('check custom Hook with Mock', () => {
+test('check custom Hook', () => {
+  const { useMyHook } = require('./useMyHook');
   jest.mock('./useMyHook', () => ({
-    useMyHook: () => [3, 4, 5]
+    useMyHook: () => [1, 2, 3]
   }));
 
   const [value1, value2, value3] = useMyHook();
-  expect([value1, value2, value3]).toBe([3, 4, 5]);
+  console.log([value1, value2, value3]);
+  expect([value1, value2, value3]).toEqual([1, 2, 3]);
 });
 
 // test('Check mock Hook in JSX element', async () => {
