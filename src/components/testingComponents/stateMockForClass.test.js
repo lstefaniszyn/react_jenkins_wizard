@@ -2,6 +2,7 @@ import React from 'react';
 import { render, waitForElement, fireEvent } from '@testing-library/react';
 import { StateMock } from '@react-mock/state';
 import { StatefulCounter } from './stateMockForClass';
+import { useCounter, Example } from './useStateMock';
 
 //REMARK: It works only with Class structures.  No useState()
 
@@ -27,4 +28,16 @@ it('increments count', async () => {
 
   fireEvent.click(getByText('+1'));
   await waitForElement(() => getByText(/clicked 6 times/i));
+});
+
+test('Check mock Hook in JSX element', async () => {
+  const { getByText } = render(
+    <div>
+      <Example />
+    </div>
+  );
+  await waitForElement(() => getByText(/Your value1=5/));
+  await waitForElement(() => getByText(/Your value2=5/));
+  await waitForElement(() => getByText(/Your value3=7/));
+  console.log('Document_2: ' + document.body.outerHTML);
 });

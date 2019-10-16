@@ -1,14 +1,18 @@
 import { useCounter } from './useStateMock';
-import { useMyHook } from './useMyHook';
+import { useMyHook, Example } from './useMyHook';
 
 const mockSetState = jest.fn();
+
 jest.mock('react', () => ({
   useState: initial => [initial, mockSetState]
 }));
 
+// jest.mock('./useMyHook');
 jest.mock('./useMyHook', () => ({
   useMyHook: () => [1, 2, 3]
 }));
+
+beforeAll(() => {});
 
 beforeEach(() => {
   jest.resetModules();
@@ -34,6 +38,22 @@ test('check custom Hook', () => {
 });
 
 test('check custom Hook with Mock', () => {
+  jest.mock('./useMyHook', () => ({
+    useMyHook: () => [3, 4, 5]
+  }));
+
   const [value1, value2, value3] = useMyHook();
-  // expect([value1, value2, value3]).toBe([1, 2, 3]);
+  expect([value1, value2, value3]).toBe([3, 4, 5]);
 });
+
+// test('Check mock Hook in JSX element', async () => {
+//   const { getByText } = render(
+//     <div>
+//       <Example />
+//     </div>
+//   );
+//   await waitForElement(() => getByText(/Your value1=1/));
+//   await waitForElement(() => getByText(/Your value2=2/));
+//   await waitForElement(() => getByText(/Your value3=3/));
+//   console.log('Document_2: ' + document.body.outerHTML);
+// });

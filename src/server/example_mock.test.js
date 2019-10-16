@@ -14,7 +14,7 @@ describe('Validate template json file', () => {
     // );
   });
 
-  it('Return TemplateData by mock method', async () => {
+  it('Return TemplateData by mock method_1', async () => {
     const axios = require('axios');
     jest.mock('axios');
     const resp = { name: 'John_2' };
@@ -26,7 +26,7 @@ describe('Validate template json file', () => {
     expect(data).toEqual({ name: 'John_2' });
   });
 
-  it('Return TemplateData by mock method', async () => {
+  it('Return TemplateData by mock method_2', async () => {
     const mockAxios = require('../../__mocks__/axios');
     const resp = { name: 'John_6' };
 
