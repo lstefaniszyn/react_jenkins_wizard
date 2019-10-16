@@ -1,13 +1,12 @@
-import { useCounter } from './useStateMock';
-import { Example } from './useMyHook';
+import React from 'react';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
+import { useCounter, Example } from './useStateMock';
 
 const mockSetState = jest.fn();
 
 jest.mock('react', () => ({
   useState: initial => [initial, mockSetState]
 }));
-
-// jest.mock('./useMyHook');
 
 beforeAll(() => {});
 
@@ -48,14 +47,18 @@ test('check custom Hook', () => {
   expect([value1, value2, value3]).toEqual([1, 2, 3]);
 });
 
-// test('Check mock Hook in JSX element', async () => {
-//   const { getByText } = render(
-//     <div>
-//       <Example />
-//     </div>
-//   );
-//   await waitForElement(() => getByText(/Your value1=1/));
-//   await waitForElement(() => getByText(/Your value2=2/));
-//   await waitForElement(() => getByText(/Your value3=3/));
-//   console.log('Document_2: ' + document.body.outerHTML);
-// });
+test('Check mock Hook in JSX element', async () => {
+  const { useMyHook } = require('./useMyHook');
+  jest.mock('./useMyHook');
+  useMyHook.mockReturnValue([1, 2, 3]);
+
+  const { getByText } = render(
+    <div>
+      <Example />
+    </div>
+  );
+  await waitForElement(() => getByText(/Your value1=1/));
+  await waitForElement(() => getByText(/Your value2=2/));
+  await waitForElement(() => getByText(/Your value3=3/));
+  console.log('Document_2: ' + document.body.outerHTML);
+});
